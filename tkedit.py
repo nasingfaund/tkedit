@@ -3,6 +3,7 @@
 '''
 A simple text editor written in Python 
 Geno Timlin 2015
+nasingfaund 2023
 '''
 import sys, os
 ###import tkinter as tk
