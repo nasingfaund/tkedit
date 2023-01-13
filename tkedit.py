@@ -3,21 +3,23 @@
 '''
 A simple text editor written in Python 
 Geno Timlin 2015
-
-
 '''
 import sys, os
-from Tkinter import *
-from Tkinter import Tk
-import tkMessageBox
-import ScrolledText
-from tkFileDialog import askopenfilename, asksaveasfilename
-import tkSimpleDialog
+###import tkinter as tk
+from tkinter import messagebox, Tk, Frame, Label, simpledialog, FALSE, Menu, PanedWindow, VERTICAL, BOTH, scrolledtext, WORD, SUNKEN, W, X, BOTTOM, LEFT, StringVar, OptionMenu, END, INSERT
+###from tkinter import Tk
+###import tkMessageBox
+
+###from tkinter.Messagebox import Messagebox
+###import ScrolledText
+###from tkFileDialog import askopenfilename, asksaveasfilename
+from tkinter.filedialog import askopenfilename, asksaveasfilename
+###import tkSimpleDialog
 import json
 from os.path import expanduser
 
 def callback():
-	tkMessageBox.showinfo("Callback", "Callback")
+	messagebox.showinfo("Callback", "Callback")
 
 APPTITLE = "TK Editor"
 APPVERSION = "1.0"
@@ -58,7 +60,7 @@ class WindowConfig:
 
 
 
-class OptionsDialog(tkSimpleDialog.Dialog):
+class OptionsDialog(simpledialog.Dialog):
 	parent = None	
 	opt_font = None
 	opt_font_size = None
@@ -159,7 +161,7 @@ class MainWindow:
 		self.panel = PanedWindow(orient=VERTICAL)
 		self.panel.pack(fill=BOTH, expand=1)
 
-		self.textfield = ScrolledText.ScrolledText(master, wrap=WORD,
+		self.textfield = scrolledtext.ScrolledText(master, wrap=WORD,
 			 font=(g_window_config.font, g_window_config.font_size), 
 			 fg = g_window_config.foreground, bg = g_window_config.background )
 		self.panel.add(self.textfield)
@@ -195,7 +197,7 @@ class MainWindow:
 
 	# callbacks
 	def doFileNew(self):
-		tkMessageBox.showinfo(APPTITLE, "doFileNew()")
+		messagebox.showinfo(APPTITLE, "doFileNew()")
 
 	def doFileOpen(self):
 		filename = askopenfilename(**self.dialog_options) 
@@ -231,7 +233,7 @@ class MainWindow:
 
 	def doHelpAbout(self):
 		message = "{0} v{1}\nThis is a little program.\nCopyright © 2015".format(APPTITLE, APPVERSION)
-		tkMessageBox.showinfo(APPTITLE, message)		
+		messagebox.showinfo(APPTITLE, message)		
 
 	# file handling routines
 	def fileLoad(self, filename):		
@@ -272,7 +274,7 @@ def load_config():
 			#print g_window_config
 
 	except:
-		print "Error: {0} {1}".format(sys.exc_info()[1], sys.exc_info()[2])
+		print ("Error: {0} {1}".format(sys.exc_info()[1], sys.exc_info()[2]))
 
 def save_config():
 	global g_window_config
@@ -287,27 +289,25 @@ def save_config():
 			config_file.write("background=%s\n" % (g_window_config.background))
 			config_file.close()
 	except:
-		print "Error: {0} {1}".format(sys.exc_info()[1], sys.exc_info()[2])
+		print ("Error: {0} {1}".format(sys.exc_info()[1], sys.exc_info()[2]))
 
 def main():
-  	global g_window_config
-	try:
-		# load the window config
-		load_config()
-
-		root = Tk()
-		# icons MUST be in GIF format for this to work
-		img = PhotoImage(file='favicon.gif')
-		root.tk.call('wm', 'iconphoto', root._w, img)		
+    global g_window_config
+    try:
+        # load the window config
+        load_config()
+        root=Tk()
+        # icons MUST be in GIF format for this to work
+        ###img = PhotoImage(file='favicon.gif')
+        ###root.tk.call('wm', 'iconphoto', root._w, img)
 		# show the main window
-		app = MainWindow(root)
-		root.mainloop()
+        app = MainWindow(root)
+        root.mainloop()
 		# save the window config
-		save_config()
+        save_config()
 
-	except:
-		print "Error: {0} {1}".format(sys.exc_info()[1], sys.exc_info()[2])
+    except:
+        print ("Error: {0} {1}".format(sys.exc_info()[1], sys.exc_info()[2]))
 
 if __name__ == '__main__':
-    main()  
-
+    main() 
